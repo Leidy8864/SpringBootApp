@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<h4 class="card-title">
+					<a class="btn btn-primary btn-xs"
+						th:href="@{'/matricula/form/' + ${alumno.id}}"
+						th:text="'crear matricula'"></a>
+				</h4>
+
+				<img th:if="${#strings.length(alumno.foto) > 0}"
+					class="img-thumbnail rounded float-left" style="max-width: 25%;"
+					th:src="@{'/uploads/' + ${alumno.foto}}" th:alt="${alumno.foto}" />
+
+				<ul class="list-group">
+					<li class="list-group-item active" th:text="${alumno.nombre}"></li>
+					<li class="list-group-item" th:text="${alumno.apellido}"></li>
+					<li class="list-group-item" th:text="${alumno.email}"></li>
+				</ul>
+
+				<div th:if="${#lists.isEmpty(alumno.matriculas)}"
+					class="alert alert-info my-4"
+					th:text="'No hay matriculas asignadas para el alumno ' + ${alumno.nombre} + ' ' + ${alumno.apellido}"></div>
+
+				<table th:if="${not #lists.isEmpty(alumno.matriculas)}"
+					class="table table-bordered table-striped my-4">
+					<thead class="thead-inverse">
+						<tr>
+							<th>Id</th>
+							<th>Ciclo</th>
+							<th>Anio</th>
+							<th>Semestre</th>
+							<th>Fecha registro</th>
+							<th>Pago Total</th>
+							<th>Ver</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="matricula: ${alumno.matriculas}">
+							<td th:text="${matricula.id}"></td>
+							<td th:text="${matricula.ciclo}"></td>
+							<td th:text="${matricula.anio}"></td>
+							<td th:text="${matricula.semestre}"></td>
+							<td th:text="${matricula.createAt}"></td>
+							<td th:text="${matricula.total}"></td>
+							<td><a class="btn btn-primary btn-xs"
+								th:href="@{'/matricula/ver/' + ${matricula.id}}" th:text="'detalle'"></a></td>
+							<td><a class="btn btn-danger btn-xs"
+								th:href="@{'/matricula/eliminar/' + ${matricula.id}}"
+								th:text="'eliminar'"
+								onclick="return confirm('¿Estas seguro que desea eliminar la matricula?');"></a></td>
+						</tr>
+					</tbody>
+
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<table th:fragment="itemsMatricula" class="d-none">
+
+		<tbody id="plantillaItemsMatricula">
+			<tr id="row_{ID}">
+				<td class="d-none"><input type="hidden" value="{ID}"
+					name="item_id[]" /></td>
+				<td>{NOMBRE}</td>
+				<td>{PRECIO}</td>
+				<td><span id="total_importe_{ID}">0</span></td>
+				<td><a href="#" class="btn btn-danger btn-xs" onclick="itemsHelper.eliminarLineaMatricula({ID});">x</a></td>
+			</tr>
+
+		</tbody>
+
+	</table>
+
+</body>
+</html>
